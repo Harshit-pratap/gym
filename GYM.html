@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>IronVital Gym | Classic Strength & Animation</title>
+  <!-- Google Fonts & Font Awesome 6 -->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: #0a0c0f;
+      color: #ededed;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Classic animated background: floating weights, dust particles, and subtle lightning */
+    .gym-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      overflow: hidden;
+      pointer-events: none;
+      background: radial-gradient(circle at 20% 30%, #14181c, #030507);
+    }
+
+    /* animated floating dumbells / gym icons */
+    .float-icon {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.1;
+      color: #ff9900;
+      animation: floatGear 20s infinite alternate ease-in-out;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    @keyframes floatGear {
+      0% {
+        transform: translateY(0px) rotate(0deg) scale(0.8);
+        opacity: 0.05;
+      }
+      100% {
+        transform: translateY(-60px) rotate(15deg) scale(1.1);
+        opacity: 0.2;
+      }
+    }
+
+    /* Dust / sweat particles (classic gym vibe) */
+    .sweat-particle {
+      position: absolute;
+      background: rgba(255, 215, 130, 0.3);
+      border-radius: 50%;
+      filter: blur(4px);
+      animation: riseDust 14s infinite linear;
+    }
+
+    @keyframes riseDust {
+      0% {
+        transform: translateY(100vh) translateX(0px) scale(0.4);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.5;
+      }
+      80% {
+        opacity: 0.2;
+      }
+      100% {
+        transform: translateY(-20vh) translateX(40px) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* barbell clank animation (moving line) */
+    .clank-line {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #f5a623, #ffc857, transparent);
+      animation: clankSlide 8s infinite linear;
+      opacity: 0.3;
+    }
+
+    @keyframes clankSlide {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* Main container */
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 4rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Classic Navbar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      padding: 1rem 0 2rem;
+      border-bottom: 1px solid rgba(245, 165, 35, 0.3);
+      margin-bottom: 2rem;
+    }
+
+    .logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #f5a623, #ffdd99);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .logo span {
+      font-size: 1.8rem;
+      color: #f5a623;
+      background: none;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 600;
+      color: #dddddd;
+      transition: 0.2s;
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 0.5px;
+    }
+    .nav-links a:hover {
+      color: #f5a623;
+      transform: translateY(-2px);
+    }
+
+    /* Hero Section with Classic Animation */
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+      margin: 2rem 0 4rem;
+    }
+
+    .hero-text {
+      flex: 1;
+      animation: slideRightFade 0.8s ease-out;
+    }
+    .hero-text h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 4rem;
+      line-height: 1.1;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff, #f5a623);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1rem;
+    }
+    .hero-text p {
+      font-size: 1.2rem;
+      color: #bcbcbc;
+      margin-bottom: 2rem;
+      max-width: 550px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 0.9rem 2rem;
+      font-weight: 700;
+      border-radius: 0px;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 1px;
+    }
+    .btn-primary {
+      background: #f5a623;
+      color: #0a0c0f;
+      border: 2px solid #f5a623;
+      box-shadow: 0 5px 15px rgba(245, 166, 35, 0.3);
+    }
+    .btn-primary:hover {
+      background: #d98c1a;
+      transform: scale(1.02);
+      box-shadow: 0 10px 22px rgba(245, 166, 35, 0.4);
+    }
+    .btn-outline {
+      border: 2px solid #f5a623;
+      color: #f5a623;
+      background: transparent;
+    }
+    .btn-outline:hover {
+      background: #f5a62320;
+      border-color: #ffbc5e;
+    }
+
+    .hero-image {
+      flex: 1;
+      text-align: center;
+      animation: floatHero 2.5s infinite alternate ease-in-out;
+    }
+    .hero-image i {
+      font-size: 12rem;
+      color: #f5a623;
+      filter: drop-shadow(0 0 15px rgba(245,166,35,0.4));
+      transition: 0.2s;
+    }
+
+    @keyframes slideRightFade {
+      from {
+        opacity: 0;
+        transform: translateX(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    @keyframes floatHero {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-15px); }
+    }
+
+    /* Sections */
+    .section-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2.5rem;
+      text-align: center;
+      margin: 3rem 0 2rem;
+      letter-spacing: 2px;
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: #f5a623;
+    }
+
+    /* Features / Gym Classes (Classic Cards with animation) */
+    .classes-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+    .class-card {
+      background: #151a1f;
+      padding: 2rem 1.5rem;
+      width: 260px;
+      text-align: center;
+      border-radius: 12px;
+      transition: all 0.35s ease;
+      border: 1px solid #2c2f33;
+      box-shadow: 0 15px 25px -12px rgba(0,0,0,0.5);
+      animation: cardUp 0.5s backwards;
+    }
+    .class-card:hover {
+      transform: translateY(-12px);
+      border-color: #f5a623;
+      background: #1d242b;
+      box-shadow: 0 25px 35px -12px rgba(245,166,35,0.2);
+    }
+    .class-card i {
+      font-size: 3rem;
+      color: #f5a623;
+      margin-bottom: 1rem;
+    }
+    .class-card h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+    }
+    .class-card p {
+      color: #afbac3;
+      font-size: 0.9rem;
+    }
+
+    @keyframes cardUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Motivational Banner with animation */
+    .motivation {
+      background: linear-gradient(135deg, #0f1419, #1a1f24);
+      margin: 4rem 0;
+      padding: 2.5rem;
+      border-left: 6px solid #f5a623;
+      border-radius: 24px;
+      text-align: center;
+      animation: pulseGlow 2s infinite alternate;
+    }
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 5px rgba(245,166,35,0.3); }
+      100% { box-shadow: 0 0 18px rgba(245,166,35,0.7); }
+    }
+    .motivation h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      color: #f5e7c8;
+    }
+
+    /* Pricing & CTA (Classic gym style) */
+    .pricing {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin: 2rem 0 4rem;
+    }
+    .price-card {
+      background: #101418;
+      padding: 2rem;
+      width: 280px;
+      text-align: center;
+      border-radius: 20px;
+      transition: 0.25s;
+      border: 1px solid #2d333b;
+    }
+    .price-card:hover {
+      border-color: #f5a623;
+      transform: scale(1.02);
+    }
+    .price-card h3 {
+      font-size: 1.8rem;
+      font-family: 'Oswald', sans-serif;
+    }
+    .price-card .price {
+      font-size: 2.5rem;
+      color: #f5a623;
+      font-weight: 700;
+      margin: 1rem 0;
+    }
+    .price-card ul {
+      list-style: none;
+      margin: 1rem 0;
+    }
+    .price-card li {
+      margin: 0.7rem 0;
+      color: #bcbcbc;
+    }
+    .price-card .btn-small {
+      background: #f5a623;
+      padding: 0.7rem 1.5rem;
+      border: none;
+      font-weight: bold;
+      color: #0a0c0f;
+      display: inline-block;
+      text-decoration: none;
+      margin-top: 1rem;
+      font-family: 'Oswald', sans-serif;
+    }
+
+    /* Classic footer */
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid #2c2f33;
+      margin-top: 3rem;
+      color: #9aa6b0;
+    }
+    .social-icons i {
+      font-size: 1.3rem;
+      margin: 0 10px;
+      transition: 0.2s;
+      color: #c7a55b;
+      cursor: pointer;
+    }
+    .social-icons i:hover {
+      color: #f5a623;
+      transform: translateY(-3px);
+    }
+
+    /* Responsive */
+    @media (max-width: 780px) {
+      .hero-text h1 {
+        font-size: 2.8rem;
+      }
+      .container {
+        padding: 1rem;
+      }
+      .nav-links {
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Classic gym animated background: floating dumbells, particles, barbell line -->
+<div class="gym-bg" id="gymBg"></div>
+
+<div class="container">
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">IRON<span>VITAL</span> <i class="fas fa-dumbbell" style="font-size: 1.6rem; color:#f5a623;"></i></div>
+    <div class="nav-links">
+      <a href="#">HOME</a>
+      <a href="#">CLASSES</a>
+      <a href="#">TRAINERS</a>
+      <a href="#">MEMBERSHIP</a>
+      <a href="#">CONTACT</a>
+    </div>
+  </nav>
+
+  <!-- Hero section with classic gym strength -->
+  <div class="hero">
+    <div class="hero-text">
+      <h1>FORGE YOUR<br>LEGACY</h1>
+      <p>Classic iron paradise. Strength, discipline, and raw energy. Join the gym that redefines power with relentless spirit.</p>
+      <div class="btn-group">
+        <a href="#" class="btn btn-primary"><i class="fas fa-fire"></i> START TODAY</a>
+        <a href="#" class="btn btn-outline"><i class="fas fa-video"></i> VIRTUAL TOUR</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <i class="fas fa-dumbbell"></i>
+    </div>
+  </div>
+
+  <!-- Classic Gym Classes (animated cards) -->
+  <div>
+    <div class="section-title">CHAMPIONS' DISCIPLINE</div>
+    <div class="classes-grid">
+      <div class="class-card" style="animation-delay: 0.05s;">
+        <i class="fas fa-weight-hanging"></i>
+        <h3>HEAVY IRON</h3>
+        <p>Powerlifting & strength training. Classic barbell movements.</p>
+      </div>
+      <div class="class-card" style="animation-delay: 0.1s;">
+        <i class="fas fa-bolt"></i>
+        <h3>HIIT BLASTER</h3>
+        <p>High intensity interval training with explosive drills.</p>
+      </div>
+      <div class="class-card" style="animation-delay: 0.15s;">
+        <i class="fas fa-heartbeat"></i>
+        <h3>BODY SCULPT</h3>
+        <p>Athletic aesthetics & functional conditioning.</p>
+      </div>
+      <div class="class-card" style="animation-delay: 0.2s;">
+        <i class="fas fa-hand-fist"></i>
+        <h3>BOXING ARENA</h3>
+        <p>Full contact cardio & combat training.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Motivation Callout (animated glow) -->
+  <div class="motivation">
+    <h2><i class="fas fa-quote-left"></i> NO EXCUSES — ONLY RESULTS <i class="fas fa-quote-right"></i></h2>
+    <p style="margin-top: 12px;">Experience the raw power of old-school gym atmosphere with modern equipment. 24/7 access, pro coaches.</p>
+  </div>
+
+  <!-- Pricing Table (Gym membership) -->
+  <div>
+    <div class="section-title">PURE STEEL MEMBERSHIP</div>
+    <div class="pricing">
+      <div class="price-card">
+        <h3>STARTER</h3>
+        <div class="price">$39<span style="font-size:1rem;">/mo</span></div>
+        <ul>
+          <li>Off-peak access</li>
+          <li>Locker & showers</li>
+          <li>2 group classes/mo</li>
+        </ul>
+        <a href="#" class="btn-small">JOIN NOW</a>
+      </div>
+      <div class="price-card" style="border-top: 3px solid #f5a623;">
+        <h3>IRON LEGEND</h3>
+        <div class="price">$69<span style="font-size:1rem;">/mo</span></div>
+        <ul>
+          <li>24/7 unlimited access</li>
+          <li>All classes unlimited</li>
+          <li>Sauna + personal plan</li>
+        </ul>
+        <a href="#" class="btn-small">BECOME LEGEND</a>
+      </div>
+      <div class="price-card">
+        <h3>ANNUAL WARRIOR</h3>
+        <div class="price">$599<span style="font-size:1rem;">/year</span></div>
+        <ul>
+          <li>Save 30% + 2 months free</li>
+          <li>Guest passes (4)</li>
+          <li>Free merchandise</li>
+        </ul>
+        <a href="#" class="btn-small">GO ANNUAL</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Classic Gym Feature: Coach/Trainer teaser -->
+  <div style="background: #0f1217; border-radius: 28px; padding: 2rem; margin: 2rem 0;">
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center; justify-content: space-between;">
+      <div>
+        <i class="fas fa-chalkboard-user" style="font-size: 3rem; color:#f5a623;"></i>
+        <h3 style="font-family: 'Oswald'; font-size: 1.8rem; margin-top: 10px;">ELITE COACHING</h3>
+        <p>Get mentored by former champions & strength experts. Personalized programming.</p>
+      </div>
+      <div>
+        <i class="fas fa-calendar-alt" style="font-size: 3rem; color:#f5a623;"></i>
+        <h3 style="font-family: 'Oswald'; font-size: 1.8rem; margin-top: 10px;">FREE TRIAL WEEK</h3>
+        <p>Test our classic equipment & atmosphere with zero commitment.</p>
+      </div>
+      <div>
+        <a href="#" class="btn-primary" style="padding: 0.8rem 2rem; display: inline-block;">CLAIM PASS <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="social-icons">
+      <i class="fab fa-facebook-f"></i>
+      <i class="fab fa-instagram"></i>
+      <i class="fab fa-twitter"></i>
+      <i class="fab fa-youtube"></i>
+    </div>
+    <p style="margin: 1rem 0 0;">© 2025 IronVital Gym — Classic Strength. Savage Mindset. <i class="fas fa-dumbbell"></i></p>
+    <p style="font-size: 0.8rem; margin-top: 8px;">Push beyond limits | Animated legacy since '25</p>
+  </footer>
+</div>
+
+<script>
+  (function createClassicGymAnimation() {
+    const bg = document.getElementById('gymBg');
+    if (!bg) return;
+    
+    // 1) floating classic gym icons (dumbell, barbell, kettlebell)
+    const iconsArray = ['fas fa-dumbbell', 'fas fa-barbell', 'fas fa-heart-pulse', 'fas fa-fist-raised', 'fas fa-stopwatch'];
+    for (let i = 0; i < 24; i++) {
+      const iconEl = document.createElement('i');
+      const randomIcon = iconsArray[Math.floor(Math.random() * iconsArray.length)];
+      iconEl.className = randomIcon + ' float-icon';
+      iconEl.style.position = 'absolute';
+      iconEl.style.fontSize = (20 + Math.random() * 45) + 'px';
+      iconEl.style.left = Math.random() * 100 + '%';
+      iconEl.style.top = Math.random() * 100 + '%';
+      iconEl.style.animationDuration = 12 + Math.random() * 22 + 's';
+      iconEl.style.animationDelay = Math.random() * 15 + 's';
+      iconEl.style.opacity = 0.07 + Math.random() * 0.15;
+      iconEl.style.color = '#ffae42';
+      bg.appendChild(iconEl);
+    }
+
+    // 2) dust/sweat particles rising (gym atmosphere)
+    const particleCount = 50;
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('sweat-particle');
+      const size = 3 + Math.random() * 18;
+      particle.style.width = size + 'px';
+      particle.style.height = size + 'px';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.bottom = '0px';
+      particle.style.animationDuration = 8 + Math.random() * 16 + 's';
+      particle.style.animationDelay = Math.random() * 12 + 's';
+      particle.style.background = `rgba(255, 180, 60, ${0.1 + Math.random() * 0.3})`;
+      bg.appendChild(particle);
+    }
+    
+    // 3) barbell clank line (classic animation)
+    const clank = document.createElement('div');
+    clank.classList.add('clank-line');
+    bg.appendChild(clank);
+    
+    // 4) add random classic flicker effect (like old-school neon)
+    const flicker = document.createElement('div');
+    flicker.style.position = 'absolute';
+    flicker.style.top = '0';
+    flicker.style.left = '0';
+    flicker.style.width = '100%';
+    flicker.style.height = '100%';
+    flicker.style.pointerEvents = 'none';
+    flicker.style.background = 'radial-gradient(circle at 30% 40%, rgba(245,166,35,0.02) 0%, rgba(0,0,0,0) 70%)';
+    flicker.style.animation = 'flickerBg 9s infinite';
+    bg.appendChild(flicker);
+    
+    const styleSheet = document.createElement("style");
+    styleSheet.textContent = `
+      @keyframes flickerBg {
+        0% { opacity: 0.3; }
+        50% { opacity: 0.6; }
+        100% { opacity: 0.2; }
+      }
+    `;
+    document.head.appendChild(styleSheet);
+  })();
+
+  // Add interactive hover for buttons to simulate classic tactile feel
+  const allActionBtns = document.querySelectorAll('.btn, .btn-small');
+  allActionBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      if(btn.getAttribute('href') === '#') e.preventDefault();
+      btn.style.transform = 'scale(0.97)';
+      setTimeout(() => { btn.style.transform = ''; }, 120);
+    });
+  });
+  
+  // Add a small console greeting
+  console.log('🏋️‍♂️ IRONVITAL GYM | Classic animated gym landing — strength in motion.');
+  
+  // Adjust floating icons on resize to keep background fresh
+  window.addEventListener('resize', () => {
+    const existingIcons = document.querySelectorAll('.float-icon');
+    if(existingIcons.length < 15 && window.innerWidth > 700) {
+      const bgContainer = document.getElementById('gymBg');
+      if(bgContainer) {
+        const extraIcon = document.createElement('i');
+        extraIcon.className = 'fas fa-dumbbell float-icon';
+        extraIcon.style.position = 'absolute';
+        extraIcon.style.fontSize = '32px';
+        extraIcon.style.left = Math.random() * 90 + '%';
+        extraIcon.style.top = Math.random() * 90 + '%';
+        extraIcon.style.animationDuration = '18s';
+        bgContainer.appendChild(extraIcon);
+      }
+    }
+  });
+</script>
+
+<!-- Additional styles for smooth classic feel -->
+<style>
+  body {
+    background: #07090c;
+  }
+  .gym-bg {
+    background: radial-gradient(ellipse at 40% 50%, #12171e, #010101);
+  }
+  .btn-primary, .btn-small {
+    transition: transform 0.1s ease, background 0.25s;
+  }
+  ::selection {
+    background: #f5a623;
+    color: #0a0c0f;
+  }
+  .class-card, .price-card {
+    transition: all 0.25s;
+  }
+  a {
+    text-decoration: none;
+  }
+</style>
+</body>
+</html>
